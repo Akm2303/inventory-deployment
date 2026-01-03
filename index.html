@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Inventaris Alat Laboratorium</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Header -->
+        <header class="mb-4">
+            <h1 class="text-center">
+                <i class="fas fa-microscope"></i> Sistem Inventaris Alat Laboratorium
+            </h1>
+            <p class="text-center text-muted">Pengelolaan dan Pemantauan Alat Laboratorium</p>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-cogs"></i> Kontrol Panel
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-success mb-2" onclick="addItem()">
+                            <i class="fas fa-plus"></i> Tambah Item Baru
+                        </button>
+                        <button class="btn btn-info mb-2" onclick="refreshData()">
+                            <i class="fas fa-sync"></i> Refresh Data
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari item...">
+                            <button class="btn btn-outline-secondary" onclick="searchItems()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5><i class="fas fa-boxes text-primary"></i> Total Item</h5>
+                        <h3 id="totalItems">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5><i class="fas fa-cube text-success"></i> Total Unit</h5>
+                        <h3 id="totalUnits">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5><i class="fas fa-tools text-warning"></i> Kategori</h5>
+                        <h3 id="totalCategories">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5><i class="fas fa-history text-info"></i> Penggunaan</h5>
+                        <h3 id="activeUsage">0</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Table -->
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <i class="fas fa-table"></i> Daftar Inventaris Alat
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>NAMA ALAT</th>
+                            <th>KODE MATERIAL</th>
+                            <th>KATEGORI</th>
+                            <th>SATUAN</th>
+                            <th>UNIT KECIL</th>
+                            <th>UNIT BESAR</th>
+                            <th>TOTAL</th>
+                            <th>PENGGUNAAN (Hari)</th>
+                            <th>AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTable">
+                        <!-- Data akan dimuat via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal for Add/Edit -->
+        <div class="modal fade" id="itemModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Tambah Item Baru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="itemForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nama Alat *</label>
+                                    <input type="text" class="form-control" id="nama" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Kode Material</label>
+                                    <input type="text" class="form-control" id="kodeMaterial">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Kategori *</label>
+                                    <select class="form-select" id="kategori" required>
+                                        <option value="INVENTARIS">INVENTARIS</option>
+                                        <option value="ALAT">ALAT</option>
+                                        <option value="BAHAN">BAHAN</option>
+                                        <option value="LAINNYA">LAINNYA</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Satuan</label>
+                                    <input type="text" class="form-control" id="satuan">
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label class="form-label">Unit Kecil</label>
+                                    <input type="number" class="form-control" id="unitKecil" value="0">
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label class="form-label">Unit Besar</label>
+                                    <input type="number" class="form-control" id="unitBesar" value="0">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Penggunaan Alat (Hari 1-17)</label>
+                                <div class="row" id="usageDays">
+                                    <!-- Checkboxes for days will be generated here -->
+                                </div>
+                            </div>
+                            
+                            <input type="hidden" id="itemId">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" onclick="saveItem()">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

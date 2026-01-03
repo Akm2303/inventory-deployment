@@ -1,0 +1,77 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.stat-card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.stat-card .card-body h5 {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.stat-card .card-body h3 {
+    margin-top: 10px;
+    color: #343a40;
+}
+
+.table th {
+    background-color: #e9ecef;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-action {
+    margin: 0 2px;
+    padding: 5px 10px;
+}
+
+.usage-day {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.usage-day.active {
+    background-color: #28a745;
+    color: white;
+}
+
+.usage-day.inactive {
+    background-color: #6c757d;
+    color: white;
+}
+
+.usage-day.used {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}

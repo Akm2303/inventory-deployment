@@ -2,13 +2,7 @@
   "name": "inventaris-app",
   "version": "1.0.0",
   "description": "Sistem Inventaris Alat",
-  "main": "index.html",
   "scripts": {
-    "start": "http-server -p 8080",
-    "build": "echo 'Building...'",
-    "deploy": "echo 'Deploying to Cloudflare...'"
-  },
-  "devDependencies": {
-    "http-server": "^14.1.1"
+    "build": "echo 'No build step required'"
   }
 }
